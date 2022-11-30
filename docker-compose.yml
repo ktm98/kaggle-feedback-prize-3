@@ -1,0 +1,13 @@
+version: '3'
+services:
+  python3:
+    restart: always
+    build: .
+    container_name: feedback-prize-3
+    working_dir: '/root/'
+    command: jupyter lab --no-browser --ip='0.0.0.0' --NotebookApp.token='' --NotebookApp.password='' --allow-root --ContentsManager.allow_hidden=True --NotebookApp.disable_check_xsrf=True
+    tty: true
+    volumes: 
+     - ./:/root
+    shm_size: 64gb
+

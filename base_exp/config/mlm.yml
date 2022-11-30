@@ -1,0 +1,40 @@
+wandb: True
+competition: FB3
+
+debug: False
+output_dir: /root/result/deberta_xsmall_mlm_10/
+model: microsoft/deberta-v3-xsmall
+gradient_checkpointing: False
+scheduler: cosine  # linear, cosine
+epochs: 10
+warmup_ratio: 0.2
+lr: 2.0e-6
+
+batch_size: 2
+max_len: 1428
+weight_decay: 0.01
+gradient_accumulation_steps: 1
+
+mlm_probability: 0.15
+
+add_new_token: True
+
+use_2021: True
+
+target_cols:
+  - cohesion
+  - syntax
+  - vocabulary
+  - phraseology
+  - grammar
+  - conventions
+
+seed: 42
+n_fold: 4
+trn_fold:
+  - 0
+  - 1
+  - 2
+  - 3
+
+train: True

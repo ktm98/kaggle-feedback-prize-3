@@ -1,0 +1,85 @@
+wandb: True
+competition: FB3
+
+apex: True
+debug: False
+print_freq: 40
+num_workers: 4
+output_dir: ../result/deberta_base_134/
+model: microsoft/deberta-v3-base
+pretrained_path: None
+
+gradient_checkpointing: False
+scheduler: cosine  # linear, cosine
+batch_scheduler: True
+num_cycles: 0.5
+# num_warmup_steps: 200
+warmup_ratio: 0.0
+epochs: 4
+encoder_lr: 1.5599720956023205e-05
+decoder_lr: 3.0153174330475715e-05
+min_lr: 1.0e-6
+eps: 1.0e-6
+betas: [0.9, 0.999]
+batch_size: 8
+max_len: 1024
+weight_decay: 0.01
+gradient_accumulation_steps: 1
+max_grad_norm: 1143.315610290733
+unscale: False
+pooling: attention  # mean, attention
+concat_layers: True
+
+freeze_layers: 0
+
+use_msd: False
+n_msd: 7  # multi sample dropout
+use_mixout: False
+mixout_prob: 0.5530308654454139
+
+
+reinit_layers: 0  # default: 0
+
+weighted_layer_pooling: False
+layer_start: 9  # 
+
+use_prior_wd: True  # default: False
+
+init_method: uniform_  # xavier_normal_, kaiming_normal_, orthogonal_, normal_
+
+lr_method: step  # constant, decay, step
+layerwise_lr_decay: 0.95  # noly for decay
+
+add_new_token: True
+
+use_pl: False
+pl_exp_name: 
+  - deberta_base_091
+pl_frac: 0.50  # plのデータから抽出される割合
+
+fgm: False
+awp: False
+adv_lr: 2.8547547523253952e-05
+adv_eps: 4.543067954812687e-06
+adv_start_epoch: 3
+
+target_cols:
+  - cohesion
+  - syntax
+  - vocabulary
+  - phraseology
+  - grammar
+  - conventions
+
+seed: 43
+n_fold: 4
+trn_fold:
+  - 0
+  - 1
+  - 2
+  - 3
+
+use_unique_token: True
+use_unique_token_as_target: False
+
+train: True

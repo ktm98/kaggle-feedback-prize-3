@@ -1,0 +1,165 @@
+wandb: False
+competition: FB3
+
+apex: True
+debug: False
+print_freq: 40
+num_workers: 4
+output_dir: /root/result/deberta_xsmall_172/
+model: microsoft/deberta-v3-xsmall
+pretrained_path: None
+
+gradient_checkpointing: False
+scheduler: cosine  # linear, cosine
+batch_scheduler: True
+num_cycles: 0.5
+# num_warmup_steps: 200
+warmup_ratio: 
+  distribution: categorical
+  values:
+    - 0.0
+    - 0.08
+    - 0.1
+    - 0.15
+epochs: 
+  distribution: int
+  min: 4
+  max: 6
+encoder_lr: 
+  distribution: loguniform
+  min: 8.0e-6
+  max: 5.0e-5
+decoder_lr: 
+  distribution: loguniform
+  min: 8.0e-6
+  max: 5.0e-5
+min_lr: 1.0e-6
+eps: 1.0e-6
+betas: [0.9, 0.999]
+batch_size: 2
+max_len: 
+  distribution: categorical
+  values:
+    - 1428
+    - 1024
+    - 768
+weight_decay: 0.01
+gradient_accumulation_steps: 1
+max_grad_norm: 1000
+unscale: False
+pooling: mean  # mean, attention
+concat_layers: False
+
+freeze_layers: 0
+
+use_msd: False
+n_msd: 7  # multi sample dropout
+use_mixout: False
+mixout_prob: 0.5530308654454139
+
+
+reinit_layers:   # default: 0
+  distribution: int
+  min: 0
+  max: 4
+
+weighted_layer_pooling: False
+layer_start: 9  # 
+
+use_prior_wd:  # default: False
+  distribution: categorical
+  values:
+    - False
+    - True
+
+init_method:  # xavier_normal_, kaiming_normal_, orthogonal_, normal_
+  distribution: categorical
+  values:
+    - xavier_normal_
+    - kaiming_normal_
+    - xavier_uniform_
+    - kaiming_uniform_
+    - orthogonal_
+    - normal_
+
+lr_method:  # constant, decay, step
+  distribution: categorical
+  values:
+    - constant
+    - decay
+    - step
+layerwise_lr_decay:   # noly for decay
+  distribution: uniform
+  min: 0.9
+  max: 0.999
+
+add_new_token: True
+
+use_pl: False
+pl_exp_name: 
+  - deberta_base_101
+  - deberta_base_102
+  - deberta_large_108
+  - deberta_large_109
+pl_frac: 0.25  # plのデータから抽出される割合
+
+teacher_model: 
+  distribution: categorical
+  values:
+    - [deberta_base_131]
+    - [deberta_base_135]
+    - [deberta_base_152]
+
+fgm: 
+  distribution: categorical
+  values:
+    - False
+    - True
+awp: 
+  distribution: categorical
+  values:
+    - False
+    - True
+adv_lr: 
+  distribution: loguniform
+  min: 1.0e-6
+  max: 1.0e-4
+adv_eps: 
+  distribution: loguniform
+  min: 1.0e-6
+  max: 1.0e-4
+adv_start_epoch: 
+  distribution: int
+  min: 3
+  max: 6
+
+target_cols:
+  - cohesion
+  - syntax
+  - vocabulary
+  - phraseology
+  - grammar
+  - conventions
+
+seed: 44
+n_fold: 4
+trn_fold:
+  - 0
+  - 1
+  # - 2
+  # - 3
+  # - 4
+  # - 5
+  # - 6
+  # - 7
+  # - 8
+  # - 9
+  
+
+use_unique_token: True
+use_unique_token_as_target: False
+
+train: True
+train_all: False
+
+quantize: False

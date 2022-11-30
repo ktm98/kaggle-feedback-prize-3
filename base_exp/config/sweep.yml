@@ -1,0 +1,153 @@
+wandb: False
+competition: FB3
+
+apex: True
+debug: False
+print_freq: 300
+num_workers: 4
+output_dir: /root/result/exp_tuning_deberta_v3_base_6/
+model: microsoft/deberta-v3-base
+pretrained_path: 
+  distribution: categorical
+  values:
+    - /root/result/deberta_base_mlm_02
+    - /root/result/deberta_base_mlm_03
+    - /root/result/deberta_base_mlm_04
+    - /root/result/deberta_base_mlm_07
+    - None
+gradient_checkpointing: False
+scheduler: cosine  # linear, cosine
+batch_scheduler: True
+num_cycles: 0.5
+# num_warmup_steps: 200
+warmup_ratio:
+  distribution: categorical
+  values:
+    - 0.0
+    - 0.08
+    - 0.10
+    - 0.15
+epochs: 4
+encoder_lr: 
+  distribution: loguniform
+  min: 7.0e-6
+  max: 3.0e-5
+decoder_lr: 
+  distribution: loguniform
+  min: 5.0e-6
+  max: 1.0e-4
+min_lr: 1.0e-6
+eps: 1.0e-6
+betas: [0.9, 0.999]
+batch_size: 8
+max_len: 1428
+weight_decay: 0.01
+gradient_accumulation_steps: 1
+  # distribution: int
+  # min: 1
+  # max: 2
+max_grad_norm: 1000
+
+unscale: False
+pooling: mean  # mean, attention
+  # distribution: categorical
+  # values:
+  #   - mean
+  #   - attention
+concat_layers: false
+  # distribution: categorical
+  # values:
+  #   - False
+  #   - True
+
+freeze_layers: 6
+
+use_msd:
+  distribution: categorical
+  values: [True, False]
+n_msd:   # multi sample dropout
+  distribution: int
+  min: 4
+  max: 8
+use_mixout: 
+  distribution: categorical
+  values: [True, False]
+mixout_prob:
+  distribution: uniform
+  min: 0.5
+  max: 0.9
+
+
+reinit_layers:  # default: 0
+  distribution: int
+  min: 0
+  max: 1
+
+weighted_layer_pooling: False
+  # distribution: categorical
+  # values: [True, False]
+layer_start: 8
+  # distribution: int
+  # min: 1
+  # max: 11 
+
+use_prior_wd:  # default: False
+  distribution: categorical
+  values: [True, False]
+
+init_method:   # xavier_normal_, kaiming_normal_, orthogonal_, normal_
+  distribution: categorical
+  values: [xavier_normal_, kaiming_normal_, orthogonal_, normal_, xavier_uniform_, kaiming_uniform_, uniform_]
+
+lr_method: step  # constant, decay, step
+  # distribution: categorical
+  # values: [constant, decay, step]
+layerwise_lr_decay: 0.99  # noly for decay
+  # distribution: uniform
+  # min: 0.9
+  # max: 0.999
+
+use_pl: False
+  # distribution: categorical
+  # values: [True, False]
+pl_exp_name: deberta_base_044
+pl_frac: 0 # plのデータから抽出される割合
+  # distribution: uniform
+  # min: 0.0
+  # max: 1.0
+
+fgm: 
+  distribution: categorical
+  values: [True, False]
+awp: 
+  distribution: categorical
+  values: [True, False]
+adv_lr: 2.8547547523253952e-05
+adv_eps: 4.543067954812687e-06
+adv_start_epoch: 
+  distribution: int
+  min: 2
+  max: 5
+
+
+target_cols:
+  - cohesion
+  - syntax
+  - vocabulary
+  - phraseology
+  - grammar
+  - conventions
+
+seed: 2022
+n_fold: 4
+trn_fold:
+  # - 0
+  - 1
+  # - 2
+  # - 3
+
+use_unique_token: True
+use_unique_token_as_target: True
+
+
+train: True
